@@ -1,1 +1,1 @@
-# h1ushkov.github.io
+<a href="/blog">BLOG</a>
