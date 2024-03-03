@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alpine.js WordPress Fetch</title>
+    <title>News</title>
     <!-- Include Alpine.js 3.x.x -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <style>
@@ -20,7 +20,7 @@
     <p x-show="error" style="color: red;">Error: <span x-text="error"></span></p>
     <table x-show="!isLoading && !error">
         <tr>
-            <th>Team</th>
+            <th>News</th>
         </tr>
         <template x-for="post in posts" :key="post.ID">
             <tr>
@@ -36,7 +36,7 @@
                 isLoading: true,
                 error: '',
                 init() {
-                    fetch('https://public-api.wordpress.com/rest/v1.1/sites/hlushkov.wordpress.com/posts/?category=blog')
+                    fetch('https://public-api.wordpress.com/rest/v1.1/sites/hlushkov.wordpress.com/posts')
                         .then(response => response.json())
                         .then(response => {
                             this.posts = response.posts;
