@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alpine.js WordPress Fetch</title>
+    <!-- Include Alpine.js 3.x.x -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body x-data="app()" x-init="init">
+
+    <h1 x-show="isLoading">Loading...</h1>
+    <p x-show="error" style="color: red;">Error: <span x-text="error"></span></p>
+    <table x-show="!isLoading && !error">
+        <tr>
+            <th>Team</th>
+        </tr>
+        <template x-for="post in posts" :key="post.ID">
+            <tr>
+                <td x-text="post.title"></td>
+            </tr>
+        </template>
+    </table>
+
+    <script>
+        function app() {
+            return {
+                posts: [],
+                isLoading: true,
+                error: '',
+                init() {
+                    fetch('https://public-api.wordpress.com/rest/v1.1/sites/hlushkov.wordpress.com/posts/?category=blog')
+                        .then(response => response.json())
+                        .then(response => {
+                            this.posts = response.posts;
+                            this.isLoading = false;
+                            this.error = '';
+                            console.log(response.posts);
+                        })
+                        .catch(error => {
+                            this.isLoading = false;
+                            this.error = error.message;
+                            console.error('Error fetching posts:', error);
+                        });
+                },
+            };
+        }
+    </script>
+</body>
+
+</html>
